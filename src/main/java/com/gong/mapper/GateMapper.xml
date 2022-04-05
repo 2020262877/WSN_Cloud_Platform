@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gong.mapper.GateMapper">
+
+    <insert id="addGate" parameterType="com.gong.pojo.Gate">
+        insert into ssmiot.gate (gatename,gatecode,addtime)
+        values(#{gatename},#{gatecode},#{addtime}) ;
+    </insert>
+
+    <delete id="deleteGate" parameterType="int">
+        delete from ssmiot.gate where id = #{id}
+    </delete>
+
+    <update id="updateGate" parameterType="com.gong.pojo.Gate">
+        update ssmiot.gate
+        set gatename = #{gatename},
+            gatecode = #{gatecode},
+            addtime = #{addtime}
+        where id = #{id} ;
+    </update>
+
+    <select id="queryGateById" resultType="com.gong.pojo.Gate">
+        select * from ssmiot.gate where id = #{id}
+    </select>
+
+    <select id="queryGateList" resultType="com.gong.pojo.Gate">
+        select * from ssmiot.gate
+    </select>
+
+    <select id="getGateByNameLike" resultType="com.gong.pojo.Gate">
+        select * from ssmiot.gate where gatename like concat('%',#{value},'%')
+    </select>
+
+    <select id="getGateByCodeLike" resultType="com.gong.pojo.Gate">
+        select * from ssmiot.gate where gatecode like concat('%',#{value},'%')
+    </select>
+</mapper>

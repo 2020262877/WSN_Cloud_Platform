@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gong.mapper.GateDeviceMapper">
+
+    <insert id="addGateDevice" parameterType="com.gong.pojo.GateDevice">
+        insert into ssmiot.gatedevice (did,gid,clientdevicename,clientdeviceid,longitude,latitude,secretkey,addtime)
+        values(#{did},#{gid},#{clientdevicename},#{clientdeviceid},#{longitude},#{latitude},#{secretkey},#{addtime})
+    </insert>
+
+    <delete id="deleteGateDevice" parameterType="int">
+        delete from ssmiot.gatedevice where id = #{id}
+    </delete>
+
+    <update id="updateGateDevice" parameterType="com.gong.pojo.GateDevice">
+        update ssmiot.gatedevice
+        set did = #{did},
+            gid = #{gid},
+            clientdevicename = #{clientdevicename},
+            clientdeviceid = #{clientdeviceid},
+            addtime = #{addtime}
+        where id = #{id} ;
+    </update>
+
+    <select id="queryGateDeviceById" resultType="com.gong.pojo.GateDevice">
+        select * from ssmiot.gatedevice where id = #{id}
+    </select>
+
+    <select id="queryGateDeviceByDId" resultType="com.gong.pojo.GateDevice">
+        select * from ssmiot.gatedevice where did = #{did}
+    </select>
+
+    <select id="queryGateDeviceByGId" resultType="com.gong.pojo.GateDevice">
+        select * from ssmiot.gatedevice where gid = #{gid}
+    </select>
+
+    <select id="queryGateDeviceList" resultType="com.gong.pojo.GateDevice">
+        select * from ssmiot.gatedevice
+    </select>
+
+    <select id="getGateDeviceByNameLike" resultType="com.gong.pojo.GateDevice">
+        select * from ssmiot.gatedevice where clientdevicename like concat('%',#{value},'%')
+    </select>
+
+    <select id="getGateDeviceByCodeLike" resultType="com.gong.pojo.GateDevice">
+        select * from ssmiot.gatedevice where clientdeviceid like concat('%',#{value},'%')
+    </select>
+
+</mapper>

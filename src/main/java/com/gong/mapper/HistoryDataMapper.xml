@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gong.mapper.HistoryDataMapper">
+
+    <insert id="addHistoryData" parameterType="com.gong.pojo.HistoryData">
+        insert into ssmiot.historydata (gdid,recordtime,recorddata)
+        values(#{gdid},#{recordtime},#{recorddata}) ;
+    </insert>
+
+    <delete id="deleteHistoryData" parameterType="int">
+        delete from ssmiot.historydata where id = #{id}
+    </delete>
+
+    <select id="queryHistoryDataList" resultType="com.gong.pojo.HistoryData">
+        <choose>
+            <when test="startTime!=null and startTime!= '' and endTime!=null and endTime!=''">
+                select * from ssmiot.historydata
+                where gdid = #{gdid}
+                    and recordtime&gt;= #{startTime}
+                    and recordtime&lt;= #{endTime}
+            </when>
+            <when test="(startTime!=null and startTime!= '') and (endTime==null or endTime=='')">
+                select * from ssmiot.historydata
+                where gdid = #{gdid}
+                and recordtime&gt;= #{startTime}
+            </when>
+
+            <otherwise>
+                select * from (select * from ssmiot.historydata where gdid = #{gdid} order by id desc limit 10)a order by id asc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="queryHistoryDataLast" resultType="com.gong.pojo.HistoryData">
+        select * from ssmiot.historydata where gdid = #{gdid} order by id desc limit 1
+    </select>
+
+    <update id="updateAccessToken" parameterType="com.gong.pojo.VideoToken">
+        update ssmiot.videotoken
+        set accesstoken = #{accesstoken}
+        where id = #{id}
+    </update>
+
+    <select id="getVideoToken" resultType="com.gong.pojo.VideoToken">
+        select * from ssmiot.videotoken where id = #{id}
+    </select>
+</mapper>

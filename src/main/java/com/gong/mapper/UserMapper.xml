@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gong.mapper.UserMapper">
+
+    <insert id="addUser" parameterType="com.gong.pojo.User">
+        insert into ssmiot.user (username,password,usertype,mail)
+        values(#{username},#{password},#{usertype},#{mail}) ;
+    </insert>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from ssmiot.user where id = #{id}
+    </delete>
+
+    <update id="updateUser" parameterType="com.gong.pojo.User">
+        update ssmiot.user
+        set username = #{username}, password = #{password}, usertype = #{usertype},mail=#{mail}
+        where id = #{id} ;
+    </update>
+
+    <update id="updatePassword" parameterType="com.gong.pojo.User">
+        update ssmiot.user
+        set password = #{password}
+        where username = #{username};
+    </update>
+
+    <select id="queryUserById" resultType="com.gong.pojo.User">
+        select * from ssmiot.user where id = #{id}
+    </select>
+
+    <select id="queryUserByUserName" resultType="com.gong.pojo.User">
+        select * from ssmiot.user where username = #{username}
+    </select>
+
+    <select id="queryUserByUserType" resultType="com.gong.pojo.User">
+        select * from ssmiot.user where usertype = #{usertype}
+    </select>
+
+    <select id="queryUserList" resultType="com.gong.pojo.User">
+        select * from ssmiot.user
+    </select>
+
+    <select id="getUserLike" parameterType="String" resultType="com.gong.pojo.User">
+        select * from ssmiot.user where username like concat('%',#{value},'%')
+    </select>
+
+    <select id="mailExist" resultType="com.gong.pojo.User">
+        select * from ssmiot.user where mail = #{mail}
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gong.mapper.DeviceTypeMapper">
+
+    <insert id="addDeviceType" parameterType="com.gong.pojo.DeviceType">
+        insert into ssmiot.devicetype (devicetypecode,devicetypename,addtime)
+        values(#{devicetypecode},#{devicetypename},#{addtime}) ;
+    </insert>
+
+    <delete id="deleteDeviceType" parameterType="int">
+        delete from ssmiot.devicetype where id = #{id}
+    </delete>
+
+    <update id="updateDeviceType" parameterType="com.gong.pojo.DeviceType">
+        update ssmiot.devicetype
+        set devicetypecode = #{devicetypecode},
+            devicetypename = #{devicetypename},
+            addtime = #{addtime}
+        where id = #{id} ;
+    </update>
+
+    <select id="queryDeviceTypeById" resultType="com.gong.pojo.DeviceType">
+        select * from ssmiot.devicetype where id = #{id}
+    </select>
+
+    <select id="queryDeviceTypeList" resultType="com.gong.pojo.DeviceType">
+        select * from ssmiot.devicetype
+    </select>
+
+    <select id="getDeviceTypeByNameLike" resultType="com.gong.pojo.DeviceType">
+        select * from ssmiot.devicetype where devicetypename like concat('%',#{value},'%')
+    </select>
+
+    <select id="getDeviceTypeByCodeLike" resultType="com.gong.pojo.DeviceType">
+        select * from ssmiot.devicetype where devicetypecode like concat('%',#{value},'%')
+    </select>
+</mapper>
